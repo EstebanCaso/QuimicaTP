@@ -1,0 +1,167 @@
+[
+  {
+    "elementNumber": 104,
+    "symbol": "Rf",
+    "name": "Rutherfordio",
+    "synthesizedBy": "Instituto Central de Investigaciones Nucleares (Dubná, URSS) y Laboratorio Lawrence Berkeley (California, EE.UU.)",
+    "year": 1969,
+    "reaction": "²⁴⁹Cf + ¹²C → ²⁵⁷Rf + 4 n",
+    "halfLife": "1.3 horas (²⁶⁷Rf)",
+    "namingStory": "Nombrado en honor al físico y químico neozelandés Ernest Rutherford, considerado el padre de la física nuclear por su descubrimiento del núcleo atómico.",
+    "missingDataReason": "Al ser un elemento producido sintéticamente átomo a átomo con vidas medias muy cortas, no existe en cantidad macroscópica observable para medir densidades o puntos de fusión experimentales convencionales."
+  },
+  {
+    "elementNumber": 105,
+    "symbol": "Db",
+    "name": "Dubnio",
+    "synthesizedBy": "JINR (Dubná, URSS) y Laboratorio Lawrence Berkeley (EE.UU.)",
+    "year": 1970,
+    "reaction": "²⁴⁹Cf + ¹⁵N → ²⁶⁰Db + 4 n",
+    "halfLife": "28 horas (²⁶⁸Db)",
+    "namingStory": "Nombrado en honor a la ciudad rusa de Dubná, sede del prestigioso Instituto Central de Investigaciones Nucleares (JINR) donde se sintetizaron numerosos elementos transactínidos.",
+    "missingDataReason": "Su altísima tasa de desintegración y la imposibilidad de sintetizar más que unas cuantas decenas de átomos a la vez impiden la recolección macroscópica de muestras físicas."
+  },
+  {
+    "elementNumber": 106,
+    "symbol": "Sg",
+    "name": "Seaborgio",
+    "synthesizedBy": "Laboratorio Lawrence Berkeley (EE.UU.) dirigido por Albert Ghiorso",
+    "year": 1974,
+    "reaction": "²⁴⁹Cf + ¹⁸O → ²⁶³Sg + 4 n",
+    "halfLife": "1.9 minutos (²⁶⁹Sg)",
+    "namingStory": "Nombrado en honor al químico nuclear estadounidense Glenn T. Seaborg, ganador del Premio Nobel y pionero en la síntesis de actínidos. Fue el primer elemento bautizado en honor a una persona viva en ese momento.",
+    "missingDataReason": "Solo se pueden estudiar propiedades químicas mediante experimentos de química de átomos individuales en fase gaseosa antes de su decaimiento alfa."
+  },
+  {
+    "elementNumber": 107,
+    "symbol": "Bh",
+    "name": "Bohrio",
+    "synthesizedBy": "Centro de Investigación de Iones Pesados (GSI, Darmstadt, Alemania) dirigido por Peter Armbruster y Gottfried Münzenberg",
+    "year": 1981,
+    "reaction": "²⁰⁹Bi + ⁵⁴Cr → ²⁶²Bh + n",
+    "halfLife": "1.5 minutos (²⁷⁰Bh)",
+    "namingStory": "Nombrado en honor al físico danés Niels Bohr, premio Nobel y formulador del modelo atómico de capas y de la mecánica cuántica fundamental.",
+    "missingDataReason": "La producción promedio es de menos de un átomo por semana en aceleradores de partículas de alta energía, haciendo inviable toda medición física macroscópica."
+  },
+  {
+    "elementNumber": 108,
+    "symbol": "Hs",
+    "name": "Hassio",
+    "synthesizedBy": "GSI Helmholtzzentrum (Darmstadt, Alemania)",
+    "year": 1984,
+    "reaction": "²⁰⁸Pb + ⁵⁸Fe → ²⁶⁵Hs + n",
+    "halfLife": "16 segundos (²⁷¹Hs)",
+    "namingStory": "Deriva de 'Hassia', el nombre en latín del estado federado de Hesse en Alemania, donde se encuentra ubicado el centro GSI en Darmstadt.",
+    "missingDataReason": "Posee una volatilidad predicha alta en forma de tetróxido (HsO₄), pero su vida media efímera impide acumular masa visible o medir puntos de cambio de fase."
+  },
+  {
+    "elementNumber": 109,
+    "symbol": "Mt",
+    "name": "Meitnerio",
+    "synthesizedBy": "GSI Helmholtzzentrum (Darmstadt, Alemania)",
+    "year": 1982,
+    "reaction": "²⁰⁹Bi + ⁵⁸Fe → ²⁶⁶Mt + n",
+    "halfLife": "8 segundos (²⁷⁸Mt)",
+    "namingStory": "Nombrado en honor a la física austríaca-sueca Lise Meitner, codescubridora de la fisión nuclear y figura histórica de la física contemporánea.",
+    "missingDataReason": "Se desintegra velozmente mediante emisión alfa y fisión espontánea. No existen muestras a granel para pruebas de laboratorio habituales."
+  },
+  {
+    "elementNumber": 110,
+    "symbol": "Ds",
+    "name": "Darmstadtio",
+    "synthesizedBy": "GSI Helmholtzzentrum (Darmstadt, Alemania) por Sigurd Hofmann et al.",
+    "year": 1994,
+    "reaction": "²⁰⁸Pb + ⁶²Ni → ²⁶⁹Ds + n",
+    "halfLife": "12.7 segundos (²⁸¹Ds)",
+    "namingStory": "Nombrado en honor a la ciudad alemana de Darmstadt, cuna de los descubrimientos de seis elementos superpesados en el centro GSI.",
+    "missingDataReason": "La sección eficaz nuclear para su producción es extraordinariamente baja, requiriendo meses de haz acelerador continuo para registrar apenas unos pocos eventos de colisión."
+  },
+  {
+    "elementNumber": 111,
+    "symbol": "Rg",
+    "name": "Roentgenio",
+    "synthesizedBy": "GSI Helmholtzzentrum (Darmstadt, Alemania)",
+    "year": 1994,
+    "reaction": "²⁰⁹Bi + ⁶⁴Ni → ²⁷²Rg + n",
+    "halfLife": "2.1 minutos (²⁸²Rg)",
+    "namingStory": "Bautizado en honor al físico alemán Wilhelm Conrad Röntgen, descubridor de los rayos X y primer galardonado con el Premio Nobel de Física (1901).",
+    "missingDataReason": "Su vida media de pocos minutos y la producción de átomos individuales limitan los estudios a espectrometría de masas y correlación alfa."
+  },
+  {
+    "elementNumber": 112,
+    "symbol": "Cn",
+    "name": "Copernicio",
+    "synthesizedBy": "GSI Helmholtzzentrum (Darmstadt, Alemania)",
+    "year": 1996,
+    "reaction": "²⁰⁸Pb + ⁷⁰Zn → ²⁷⁷Cn + n",
+    "halfLife": "29 segundos (²⁸⁵Cn)",
+    "namingStory": "Dedicado al astrónomo polaco Nicolás Copérnico, quien revolucionó la ciencia universal postulando el modelo heliocéntrico del universo.",
+    "missingDataReason": "Los estudios de cromatografía sobre superficies de oro indican que es un metal volátil similar al mercurio, pero no es físicamente posible acumular gotas visibles."
+  },
+  {
+    "elementNumber": 113,
+    "symbol": "Nh",
+    "name": "Nihonio",
+    "synthesizedBy": "Instituto RIKEN (Wako, Japón) dirigido por Kosuke Morita",
+    "year": 2004,
+    "reaction": "²⁰⁹Bi + ⁷⁰Zn → ²⁷⁸Nh + n",
+    "halfLife": "9.5 segundos (²⁸⁶Nh)",
+    "namingStory": "Primer elemento descubierto en Asia. 'Nihon' es una de las dos formas tradicionales de decir 'Japón' en japonés (literalmente 'la tierra del sol naciente').",
+    "missingDataReason": "El experimento en RIKEN requirió más de nueve años de bombardeo constante con iones pesados para confirmar concluyentemente solo 3 eventos de síntesis de este núcleo."
+  },
+  {
+    "elementNumber": 114,
+    "symbol": "Fl",
+    "name": "Flerovio",
+    "synthesizedBy": "JINR (Dubná, Rusia) y LLNL (EE.UU.)",
+    "year": 1998,
+    "reaction": "²⁴⁴Pu + ⁴⁸Ca → ²⁸⁹Fl + 3 n",
+    "halfLife": "2.1 segundos (²⁸⁹Fl)",
+    "namingStory": "Nombrado en honor al físico nuclear soviético Georgi Fliórov, fundador del Laboratorio Flerov de Reacciones Nucleares de Dubná y pionero de la fisión espontánea.",
+    "missingDataReason": "Se encuentra ubicado en la teórica 'isla de estabilidad', pero su vida media continúa siendo de segundos; sus propiedades químicas solo son inferidas por cromatografía criogénica."
+  },
+  {
+    "elementNumber": 115,
+    "symbol": "Mc",
+    "name": "Moscovio",
+    "synthesizedBy": "Colaboración entre JINR (Dubná, Rusia), LLNL y el Laboratorio Nacional de Oak Ridge (EE.UU.)",
+    "year": 2003,
+    "reaction": "²⁴³Am + ⁴⁸Ca → ²⁸⁸Mc + 3 n",
+    "halfLife": "0.65 segundos (²⁸⁹Mc)",
+    "namingStory": "En honor a la región histórica de Moscú (el Óblast de Moscú), donde se asienta la ciudad científica de Dubná que ha albergado décadas de investigación nuclear.",
+    "missingDataReason": "Se desintegra en fracciones de segundo hacia Nihonio mediante emisión alfa, imposibilitando la determinación de constantes cristalográficas o termodinámicas estándar."
+  },
+  {
+    "elementNumber": 116,
+    "symbol": "Lv",
+    "name": "Livermorio",
+    "synthesizedBy": "JINR (Dubná, Rusia) y LLNL (EE.UU.)",
+    "year": 2000,
+    "reaction": "²⁴⁸Cm + ⁴⁸Ca → ²⁹³Lv + 3 n",
+    "halfLife": "53 milisegundos (²⁹³Lv)",
+    "namingStory": "Nombrado en honor a la ciudad de Livermore (California) y al Lawrence Livermore National Laboratory (LLNL), institución clave en la investigación nuclear estadounidense.",
+    "missingDataReason": "Su vida media de unas cuantas decenas de milisegundos hace que los átomos se desintegren antes de poder interactuar químicamente con otros reactivos en fases condensadas."
+  },
+  {
+    "elementNumber": 117,
+    "symbol": "Ts",
+    "name": "Teneso",
+    "synthesizedBy": "JINR (Rusia), LLNL, Laboratorio Nacional de Oak Ridge y Universidad de Vanderbilt (EE.UU.)",
+    "year": 2010,
+    "reaction": "²⁴⁹Bk + ⁴⁸Ca → ²⁹⁴Ts + 3 n",
+    "halfLife": "51 milisegundos (²⁹⁴Ts)",
+    "namingStory": "Nombrado en honor al estado de Tennessee (EE.UU.), sede del reactor de flujo isotópico de Oak Ridge donde se sintetizó el escaso blanco nuclear de berkelio-249.",
+    "missingDataReason": "La preparación del blanco de berkelio tomó un año entero de refinamiento químico, y la posterior colisión con calcio-48 produjo únicamente 6 átomos de Teneso en meses de operación continua."
+  },
+  {
+    "elementNumber": 118,
+    "symbol": "Og",
+    "name": "Oganesón",
+    "synthesizedBy": "Instituto Central de Investigaciones Nucleares (Dubná, Rusia) y Lawrence Livermore National Laboratory (EE.UU.)",
+    "year": 2002,
+    "reaction": "²⁴⁹Cf + ⁴⁸Ca → ²⁹⁴Og + 3 n",
+    "halfLife": "0.7 milisegundos (²⁹⁴Og)",
+    "namingStory": "Nombrado en honor al académico ruso-armenio Yuri Oganessián (nacido en 1933), por sus contribuciones determinantes a la física de iones pesados y síntesis de elementos superpesados.",
+    "missingDataReason": "Es el elemento más pesado jamás creado por la humanidad. Solo se han producido aproximadamente 4 a 5 átomos en total, cada uno existiendo menos de un milisegundo antes de desintegrarse por fisión espontánea o emisión alfa. Los efectos relativistas sobre su nube electrónica sugieren que podría ser un sólido reactivo en lugar de un gas noble típico, pero toda propiedad macroscópica es estrictamente una predicción teórica."
+  }
+]

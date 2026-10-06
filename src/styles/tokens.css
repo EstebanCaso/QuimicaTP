@@ -1,0 +1,27 @@
+@layer base {
+  :root {
+    --bg-app: #FAFAFA;
+    --bg-card: #FFFFFF;
+    --border-subtle: #E4E4E7;
+    --border-strong: #D4D4D8;
+    --text-primary: #18181B;
+    --text-secondary: #71717A;
+    --text-muted: #A1A1AA;
+    --accent-blue: #2563EB;
+    --accent-blue-hover: #1D4ED8;
+    --accent-blue-subtle: #EFF6FF;
+
+    /* Category pastel colors */
+    --cat-alkali-metal: #FEE2E2;
+    --cat-alkaline-earth: #FFEDD5;
+    --cat-transition: #E2E8F0;
+    --cat-post-transition: #DCFCE7;
+    --cat-metalloid: #FEF9C3;
+    --cat-reactive-nonmetal: #E0F2FE;
+    --cat-halogen: #E0E7FF;
+    --cat-noble-gas: #EDE9FE;
+    --cat-lanthanide: #FCE7F3;
+    --cat-actinide: #F3E8FF;
+    --cat-unknown: #F4F4F5;
+  }
+}

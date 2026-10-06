@@ -1,0 +1,122 @@
+[
+  {
+    "formula": "OH",
+    "formulaFormatted": "OH⁻",
+    "name": "hidróxido",
+    "charge": -1,
+    "elements": ["O", "H"],
+    "type": "anion"
+  },
+  {
+    "formula": "SO4",
+    "formulaFormatted": "SO₄²⁻",
+    "name": "sulfato",
+    "charge": -2,
+    "elements": ["S", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "SO3",
+    "formulaFormatted": "SO₃²⁻",
+    "name": "sulfito",
+    "charge": -2,
+    "elements": ["S", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "NO3",
+    "formulaFormatted": "NO₃⁻",
+    "name": "nitrato",
+    "charge": -1,
+    "elements": ["N", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "NO2",
+    "formulaFormatted": "NO₂⁻",
+    "name": "nitrito",
+    "charge": -1,
+    "elements": ["N", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "CO3",
+    "formulaFormatted": "CO₃²⁻",
+    "name": "carbonato",
+    "charge": -2,
+    "elements": ["C", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "PO4",
+    "formulaFormatted": "PO₄³⁻",
+    "name": "fosfato",
+    "charge": -3,
+    "elements": ["P", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "ClO",
+    "formulaFormatted": "ClO⁻",
+    "name": "hipoclorito",
+    "charge": -1,
+    "elements": ["Cl", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "ClO2",
+    "formulaFormatted": "ClO₂⁻",
+    "name": "clorito",
+    "charge": -1,
+    "elements": ["Cl", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "ClO3",
+    "formulaFormatted": "ClO₃⁻",
+    "name": "clorato",
+    "charge": -1,
+    "elements": ["Cl", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "ClO4",
+    "formulaFormatted": "ClO₄⁻",
+    "name": "perclorato",
+    "charge": -1,
+    "elements": ["Cl", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "MnO4",
+    "formulaFormatted": "MnO₄⁻",
+    "name": "permanganato",
+    "charge": -1,
+    "elements": ["Mn", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "CrO4",
+    "formulaFormatted": "CrO₄²⁻",
+    "name": "cromato",
+    "charge": -2,
+    "elements": ["Cr", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "Cr2O7",
+    "formulaFormatted": "Cr₂O₇²⁻",
+    "name": "dicromato",
+    "charge": -2,
+    "elements": ["Cr", "O"],
+    "type": "anion"
+  },
+  {
+    "formula": "NH4",
+    "formulaFormatted": "NH₄⁺",
+    "name": "amonio",
+    "charge": 1,
+    "elements": ["N", "H"],
+    "type": "cation"
+  }
+]
