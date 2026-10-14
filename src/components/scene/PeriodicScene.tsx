@@ -48,7 +48,8 @@ export const PeriodicScene: React.FC = () => {
       >
         {/* Soft, clean, shadowless flat ambient lighting */}
         <ambientLight intensity={1.5} />
-        <directionalLight position={[10, 20, 15]} intensity={1.0} />
+        <directionalLight position={[0, 0, 20]} intensity={1.2} />
+        <directionalLight position={[10, 20, 15]} intensity={0.8} />
         <directionalLight position={[-10, -10, 10]} intensity={0.4} />
 
         <PeriodicTable3D />
