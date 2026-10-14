@@ -19,6 +19,8 @@ export const FilterBar: React.FC = () => {
   const viewMode = usePeriodicStore((s) => s.viewMode);
   const setViewMode = usePeriodicStore((s) => s.setViewMode);
   const triggerCameraReset = usePeriodicStore((s) => s.triggerCameraReset);
+  const show3DObjects = usePeriodicStore((s) => s.show3DObjects);
+  const toggle3DObjects = usePeriodicStore((s) => s.toggle3DObjects);
 
   const hasActiveFilters =
     searchQuery !== '' ||
@@ -145,6 +147,26 @@ export const FilterBar: React.FC = () => {
             <span className="hidden sm:inline">2D</span>
           </button>
         </div>
+
+        {viewMode === '3d' && (
+          <button
+            type="button"
+            onClick={toggle3DObjects}
+            className={`px-2.5 py-1 text-xs font-medium rounded-md border flex items-center gap-1.5 cursor-pointer transition-colors ${
+              show3DObjects
+                ? 'bg-blue-50 text-blue-800 border-blue-300 font-semibold'
+                : 'bg-white text-neutral-600 border-neutral-300 hover:bg-neutral-50'
+            }`}
+            title={
+              show3DObjects
+                ? 'Ocultar modelos 3D temáticos sobre las piezas'
+                : 'Mostrar modelos 3D temáticos sobre las piezas'
+            }
+          >
+            <Box className={`w-3.5 h-3.5 ${show3DObjects ? 'text-blue-600' : 'text-neutral-400'}`} />
+            <span className="hidden sm:inline">Modelos 3D: {show3DObjects ? 'ON' : 'OFF'}</span>
+          </button>
+        )}
 
         {viewMode !== '2d' && (
           <Button

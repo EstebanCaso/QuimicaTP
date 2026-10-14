@@ -34,6 +34,11 @@ export interface PeriodicState {
   cameraResetKey: number;
   triggerCameraReset: () => void;
 
+  // 3D Representative Models on Tiles
+  show3DObjects: boolean;
+  setShow3DObjects: (show: boolean) => void;
+  toggle3DObjects: () => void;
+
   // Panel state
   activePanel: 'none' | 'info' | 'compounds';
   setActivePanel: (panel: 'none' | 'info' | 'compounds') => void;
@@ -157,6 +162,10 @@ export const usePeriodicStore = create<PeriodicState>((set) => ({
   cameraResetKey: 0,
   triggerCameraReset: () =>
     set((state) => ({ cameraResetKey: state.cameraResetKey + 1 })),
+
+  show3DObjects: true,
+  setShow3DObjects: (show) => set({ show3DObjects: show }),
+  toggle3DObjects: () => set((state) => ({ show3DObjects: !state.show3DObjects })),
 
   activePanel: 'none',
   setActivePanel: (panel) => set({ activePanel: panel }),

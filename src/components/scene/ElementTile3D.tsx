@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import type { ChemicalElement } from '../../domain/chemistry-types';
 import { CATEGORIES_META, getElementCoordinates } from '../../domain/elements/element-metadata';
 import { usePeriodicStore } from '../../store/usePeriodicStore';
+import { ElementModel3D } from './ElementModel3D';
 
 interface ElementTile3DProps {
   element: ChemicalElement;
@@ -18,9 +19,14 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
   const toggleElement = usePeriodicStore((s) => s.toggleElement);
   const hoveredElement = usePeriodicStore((s) => s.hoveredElement);
   const setHoveredElement = usePeriodicStore((s) => s.setHoveredElement);
+  const viewMode = usePeriodicStore((s) => s.viewMode);
+  const show3DObjects = usePeriodicStore((s) => s.show3DObjects);
 
   const isSelected = selectedSymbols.includes(element.symbol);
   const isHovered = hoveredElement?.symbol === element.symbol;
+
+  // Show 3D objects ONLY in 3D mode when enabled and not filtered out
+  const shouldRender3DModel = viewMode === '3d' && show3DObjects && !isFilteredOut;
 
   // Spatial coordinates
   // Center: group 9.5 -> x = 0, period 5 -> y = 0
@@ -40,7 +46,7 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
   const dimmedColor = useMemo(() => new THREE.Color('#E5E7EB'), []);
 
   // Target Z position for smooth elevation
-  const targetZ = isSelected ? 0.35 : isHovered ? 0.25 : 0;
+  const targetZ = isSelected ? 0.38 : isHovered ? 0.28 : 0;
   const currentZ = useRef(0);
 
   useFrame((_, delta) => {
@@ -119,10 +125,23 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
           : Math.round(element.atomicMass).toString()}
       </Text>
 
-      {/* Chemical Symbol (center) */}
+      {/* 3D Thematic / GLB Model (Visible strictly in 3D mode) */}
+      {shouldRender3DModel && (
+        <ElementModel3D
+          element={element}
+          isSelected={isSelected}
+          isHovered={isHovered}
+        />
+      )}
+
+      {/* Chemical Symbol */}
       <Text
-        position={[0, 0.04, 0.07]}
-        fontSize={0.32}
+        position={
+          shouldRender3DModel
+            ? [0, -0.22, 0.07]
+            : [0, 0.04, 0.07]
+        }
+        fontSize={shouldRender3DModel ? 0.22 : 0.32}
         color={isFilteredOut ? '#9CA3AF' : isSelected ? '#1D4ED8' : '#18181B'}
         anchorX="center"
         anchorY="middle"
@@ -133,8 +152,8 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
 
       {/* Element Name in Spanish (bottom) */}
       <Text
-        position={[0, -0.34, 0.07]}
-        fontSize={0.09}
+        position={[0, -0.38, 0.07]}
+        fontSize={shouldRender3DModel ? 0.075 : 0.09}
         color={isFilteredOut ? '#9CA3AF' : '#3F3F46'}
         anchorX="center"
         anchorY="bottom"

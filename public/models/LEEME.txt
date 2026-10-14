@@ -1,0 +1,17 @@
+# Carpeta para Modelos 3D de Elementos (.glb / .gltf)
+
+Puedes colocar aquí tus propios modelos 3D descargados (por ejemplo de Sketchfab, Blender o Kenney) nombrados con el símbolo químico del elemento en mayúscula/minúscula correspondiente:
+
+Ejemplos:
+- Au.glb  -> Modelo para el Oro (ej: lingote realista, pepita)
+- Fe.glb  -> Modelo para el Hierro (ej: viga de acero, lingote)
+- O.glb   -> Modelo para el Oxígeno (ej: emoji 3D, tanque, molécula)
+- C.glb   -> Modelo para el Carbono (ej: diamante, trozo de grafito)
+- Cu.glb  -> Modelo para el Cobre (ej: alambre, lingote)
+- Li.glb  -> Modelo para el Litio (ej: batería de litio)
+
+Para activar un nuevo modelo .glb que agregues aquí:
+1. Guarda el archivo en esta carpeta como `public/models/{Simbolo}.glb`.
+2. Añade el símbolo en `src/data/custom-models.json` en la lista "customGlbSymbols".
+
+Si un elemento no tiene archivo .glb aquí, la aplicación mostrará automáticamente su modelo temático nativo procedural (lingote, molécula O₂, etc.) o su mini-átomo con electrones en rotación.
