@@ -52,7 +52,9 @@ class ModelErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBounda
  * and normalizes its scale so it fits neatly above the periodic tile (~0.44 units).
  */
 function CustomGlbLoader({ symbol }: { symbol: string }) {
-  const { scene } = useGLTF(`/models/${symbol}.glb`);
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+  const { scene } = useGLTF(`${normalizedBase}models/${symbol}.glb`);
 
   const normalizedGroup = useMemo(() => {
     const clone = scene.clone(true);
