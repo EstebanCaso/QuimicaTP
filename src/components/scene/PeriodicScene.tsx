@@ -14,12 +14,12 @@ function CameraHandler() {
     if (!controlsRef.current) return;
     const controls = controlsRef.current;
     if (viewMode === 'flat') {
-      controls.object.position.set(0, -1.2, 16.5);
-      controls.target.set(0, -1.2, 0);
+      controls.object.position.set(0, -1.1, 17.2);
+      controls.target.set(0, -1.1, 0);
       controls.enableRotate = false;
     } else {
-      controls.object.position.set(0, -2.5, 17.5);
-      controls.target.set(0, -1.2, 0);
+      controls.object.position.set(0, -2.6, 18.0);
+      controls.target.set(0, -1.1, 0);
       controls.enableRotate = true;
     }
     controls.update();
@@ -33,24 +33,26 @@ function CameraHandler() {
       minDistance={6}
       maxDistance={35}
       maxPolarAngle={Math.PI / 2 + 0.1}
-      target={[0, -1.2, 0]}
+      target={[0, -1.1, 0]}
     />
   );
 }
 
 export const PeriodicScene: React.FC = () => {
   return (
-    <div className="w-full h-full relative bg-[#FAFAFA] select-none">
+    <div className="w-full h-full relative bg-[#F5F2EA] select-none">
       <Canvas
-        camera={{ position: [0, -2.5, 17.5], fov: 42 }}
+        camera={{ position: [0, -2.6, 18.0], fov: 42 }}
         dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true }}
       >
-        {/* Soft, clean, shadowless flat ambient lighting */}
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[0, 0, 20]} intensity={1.2} />
-        <directionalLight position={[10, 20, 15]} intensity={0.8} />
-        <directionalLight position={[-10, -10, 10]} intensity={0.4} />
+        <color attach="background" args={['#F5F2EA']} />
+
+        {/* Warm gallery & archival chart illumination */}
+        <ambientLight intensity={1.55} color="#FFFDF9" />
+        <directionalLight position={[0, 0, 20]} intensity={1.15} color="#FFFDF8" />
+        <directionalLight position={[10, 20, 15]} intensity={0.75} color="#FFF9EE" />
+        <directionalLight position={[-10, -10, 10]} intensity={0.35} />
 
         <PeriodicTable3D />
         <CameraHandler />

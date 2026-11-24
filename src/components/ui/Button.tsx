@@ -16,23 +16,23 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const sizeClasses = {
-    sm: 'px-2.5 py-1 text-xs font-medium gap-1.5 rounded-md',
-    md: 'px-3.5 py-1.5 text-sm font-medium gap-2 rounded-md',
-    lg: 'px-4 py-2 text-base font-medium gap-2.5 rounded-lg',
+    sm: 'px-2.5 py-1 text-[11px] font-medium tracking-wide gap-1.5 rounded-[2px]',
+    md: 'px-3.5 py-1.5 text-xs font-medium tracking-wide gap-2 rounded-[2px]',
+    lg: 'px-4 py-2 text-sm font-medium tracking-wide gap-2.5 rounded-[2px]',
   }[size];
 
   const variantClasses = {
     primary:
-      'bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1',
+      'bg-[#1B3B6F] text-[#FCFBF7] border border-[#132A50] hover:bg-[#132A50] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#1B3B6F]',
     secondary:
-      'bg-white text-neutral-800 border border-neutral-300 hover:bg-neutral-100 focus:ring-2 focus:ring-neutral-400 focus:ring-offset-1 shadow-xs',
+      'bg-[#FCFBF7] text-[#1A1917] border border-[#B8B0A0] hover:bg-[#EDE9DF] hover:border-[#1A1917] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#1A1917]',
     ghost:
-      'bg-transparent text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 focus:ring-2 focus:ring-neutral-300',
+      'bg-transparent text-[#57534A] border border-transparent hover:bg-[#EDE9DF] hover:text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#857F72]',
     danger:
-      'bg-white text-red-700 border border-red-300 hover:bg-red-50 focus:ring-2 focus:ring-red-400 shadow-xs',
+      'bg-[#FCFBF7] text-[#9E2A2B] border border-[#C99696] hover:bg-[#F7E8E8] hover:border-[#9E2A2B] focus-visible:outline-2 focus-visible:outline-[#9E2A2B]',
   }[variant];
 
-  const disabledClass = disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer';
+  const disabledClass = disabled ? 'opacity-45 cursor-not-allowed pointer-events-none' : 'cursor-pointer';
 
   return (
     <button

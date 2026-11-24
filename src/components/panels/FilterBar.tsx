@@ -1,9 +1,24 @@
 import React from 'react';
-import { Search, RotateCcw, Box, Eye, Grid } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { usePeriodicStore } from '../../store/usePeriodicStore';
-import { CATEGORIES_META, BLOCKS_META, PHASES_META } from '../../domain/elements/element-metadata';
+import { CATEGORIES_META, PHASES_META } from '../../domain/elements/element-metadata';
 import type { ElementCategory, ElementBlock, ElementPhase } from '../../domain/chemistry-types';
-import { Button } from '../ui/Button';
+
+const BLOCK_KEYS: ElementBlock[] = ['s', 'p', 'd', 'f'];
+
+// Display main 10 chemical families in classical periodic order
+const LEGEND_CATEGORY_KEYS: ElementCategory[] = [
+  'alkali-metal',
+  'alkaline-earth-metal',
+  'transition-metal',
+  'post-transition-metal',
+  'metalloid',
+  'reactive-nonmetal',
+  'halogen',
+  'noble-gas',
+  'lanthanide',
+  'actinide',
+];
 
 export const FilterBar: React.FC = () => {
   const searchQuery = usePeriodicStore((s) => s.searchQuery);
@@ -16,12 +31,6 @@ export const FilterBar: React.FC = () => {
   const setPhaseFilter = usePeriodicStore((s) => s.setPhaseFilter);
   const resetFilters = usePeriodicStore((s) => s.resetFilters);
 
-  const viewMode = usePeriodicStore((s) => s.viewMode);
-  const setViewMode = usePeriodicStore((s) => s.setViewMode);
-  const triggerCameraReset = usePeriodicStore((s) => s.triggerCameraReset);
-  const show3DObjects = usePeriodicStore((s) => s.show3DObjects);
-  const toggle3DObjects = usePeriodicStore((s) => s.toggle3DObjects);
-
   const hasActiveFilters =
     searchQuery !== '' ||
     categoryFilter !== 'all' ||
@@ -29,156 +38,122 @@ export const FilterBar: React.FC = () => {
     phaseFilter !== 'all';
 
   return (
-    <div className="w-full bg-white border-b border-neutral-200 px-3 py-2 flex flex-wrap items-center justify-between gap-2 shadow-xs">
-      {/* Search and Filters */}
-      <div className="flex flex-wrap items-center gap-2 grow">
-        {/* Search */}
-        <div className="relative min-w-[170px] sm:min-w-[210px]">
-          <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+    <div className="w-full bg-[#EDE9DF] border-b border-[#C8C1B2] px-3 sm:px-5 py-1.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 z-20 select-none">
+      {/* Left: Search + Block + Phase */}
+      <div className="flex flex-wrap items-center gap-2.5">
+        {/* Search Box */}
+        <div className="relative w-48 sm:w-56">
+          <Search className="w-3.5 h-3.5 text-[#857F72] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar por nombre, símbolo o Z..."
-            className="w-full pl-8 pr-2.5 py-1 text-xs rounded-md border border-neutral-300 bg-neutral-50 text-neutral-800 placeholder-neutral-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Elemento, símbolo o Z..."
+            aria-label="Buscar elemento por nombre, símbolo o número atómico"
+            className="w-full pl-7 pr-6 py-1 text-xs font-mono bg-[#FCFBF7] border border-[#B8B0A0] text-[#1A1917] placeholder-[#857F72] rounded-[2px] focus:outline-none focus:border-[#1A1917]"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 text-xs cursor-pointer"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[#857F72] hover:text-[#1A1917] p-0.5 cursor-pointer"
+              aria-label="Limpiar búsqueda"
             >
-              ×
+              <X className="w-3 h-3" />
             </button>
           )}
         </div>
 
-        {/* Category Filter */}
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value as ElementCategory | 'all')}
-          className="text-xs px-2.5 py-1 rounded-md border border-neutral-300 bg-white text-neutral-700 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-        >
-          <option value="all">Todas las categorías</option>
-          {Object.entries(CATEGORIES_META).map(([key, meta]) => (
-            <option key={key} value={key}>
-              {meta.label}
-            </option>
-          ))}
-        </select>
+        {/* Segmented Orbital Block Filter */}
+        <div className="inline-flex items-center border border-[#B8B0A0] bg-[#FCFBF7]" role="group" aria-label="Filtro por bloque orbital">
+          <span className="px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[#57534A] bg-[#EDE9DF] border-r border-[#B8B0A0]">
+            Bloque
+          </span>
+          {BLOCK_KEYS.map((b) => {
+            const active = blockFilter === b;
+            return (
+              <button
+                key={b}
+                type="button"
+                onClick={() => setBlockFilter(active ? 'all' : b)}
+                className={`px-2 py-1 font-mono text-[11px] border-r last:border-r-0 border-[#D5CFC2] cursor-pointer transition-colors ${
+                  active
+                    ? 'bg-[#1B3B6F] text-[#FCFBF7] font-semibold'
+                    : 'text-[#1A1917] hover:bg-[#EDE9DF]'
+                }`}
+                title={`Filtrar orbitales ${b}`}
+              >
+                {b}
+              </button>
+            );
+          })}
+        </div>
 
-        {/* Block Filter */}
-        <select
-          value={blockFilter}
-          onChange={(e) => setBlockFilter(e.target.value as ElementBlock | 'all')}
-          className="text-xs px-2.5 py-1 rounded-md border border-neutral-300 bg-white text-neutral-700 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-        >
-          <option value="all">Todos los bloques</option>
-          {Object.entries(BLOCKS_META).map(([key, meta]) => (
-            <option key={key} value={key}>
-              {meta.label}
-            </option>
-          ))}
-        </select>
-
-        {/* Phase Filter */}
-        <select
-          value={phaseFilter}
-          onChange={(e) => setPhaseFilter(e.target.value as ElementPhase | 'all')}
-          className="text-xs px-2.5 py-1 rounded-md border border-neutral-300 bg-white text-neutral-700 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-        >
-          <option value="all">Todos los estados (25 °C)</option>
-          {Object.entries(PHASES_META).map(([key, meta]) => (
-            <option key={key} value={key}>
-              {meta.label}
-            </option>
-          ))}
-        </select>
+        {/* Phase at 25 °C Select */}
+        <div className="inline-flex items-center border border-[#B8B0A0] bg-[#FCFBF7]">
+          <label
+            htmlFor="phase-filter-select"
+            className="px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[#57534A] bg-[#EDE9DF] border-r border-[#B8B0A0]"
+          >
+            25 °C
+          </label>
+          <select
+            id="phase-filter-select"
+            value={phaseFilter}
+            onChange={(e) => setPhaseFilter(e.target.value as ElementPhase | 'all')}
+            className="text-[11px] font-mono px-2 py-1 bg-[#FCFBF7] text-[#1A1917] focus:outline-none cursor-pointer"
+          >
+            <option value="all">Todos</option>
+            {Object.entries(PHASES_META).map(([key, meta]) => (
+              <option key={key} value={key}>
+                {meta.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {hasActiveFilters && (
-          <Button size="sm" variant="ghost" onClick={resetFilters}>
-            Restablecer filtros
-          </Button>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[#9E2A2B] border border-[#C99696] bg-[#FCFBF7] hover:bg-[#F7E8E8] cursor-pointer transition-colors"
+          >
+            Limpiar filtro
+          </button>
         )}
       </div>
 
-      {/* View Mode & Camera Controls */}
-      <div className="flex items-center gap-1.5 shrink-0">
-        <div className="inline-flex rounded-md border border-neutral-300 bg-neutral-100 p-0.5 gap-0.5">
-          <button
-            type="button"
-            onClick={() => setViewMode('3d')}
-            className={`px-2 py-1 text-xs font-medium rounded flex items-center gap-1 cursor-pointer transition-colors ${
-              viewMode === '3d'
-                ? 'bg-white text-neutral-900 shadow-xs'
-                : 'text-neutral-600 hover:text-neutral-900'
-            }`}
-            title="Espacio 3D orbital con rotación libre"
-          >
-            <Box className="w-3 h-3 text-blue-600" />
-            <span className="hidden sm:inline">3D</span>
-          </button>
+      {/* Right: Integrated Classical Wall-Chart Category Legend Swatches */}
+      <div
+        className="flex items-center gap-1 overflow-x-auto max-w-full py-0.5"
+        role="group"
+        aria-label="Leyenda y filtro por serie química"
+      >
+        {LEGEND_CATEGORY_KEYS.map((key) => {
+          const meta = CATEGORIES_META[key];
+          const isSelected = categoryFilter === key;
+          const isDimmed = categoryFilter !== 'all' && !isSelected;
 
-          <button
-            type="button"
-            onClick={() => setViewMode('flat')}
-            className={`px-2 py-1 text-xs font-medium rounded flex items-center gap-1 cursor-pointer transition-colors ${
-              viewMode === 'flat'
-                ? 'bg-white text-neutral-900 shadow-xs'
-                : 'text-neutral-600 hover:text-neutral-900'
-            }`}
-            title="Vista frontal plana perpendicular para lectura clásica"
-          >
-            <Eye className="w-3 h-3 text-blue-600" />
-            <span className="hidden sm:inline">Frontal</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setViewMode('2d')}
-            className={`px-2 py-1 text-xs font-medium rounded flex items-center gap-1 cursor-pointer transition-colors ${
-              viewMode === '2d'
-                ? 'bg-white text-neutral-900 shadow-xs'
-                : 'text-neutral-600 hover:text-neutral-900'
-            }`}
-            title="Tabla clásica accesible en cuadrícula HTML 2D"
-          >
-            <Grid className="w-3 h-3 text-blue-600" />
-            <span className="hidden sm:inline">2D</span>
-          </button>
-        </div>
-
-        {viewMode === '3d' && (
-          <button
-            type="button"
-            onClick={toggle3DObjects}
-            className={`px-2.5 py-1 text-xs font-medium rounded-md border flex items-center gap-1.5 cursor-pointer transition-colors ${
-              show3DObjects
-                ? 'bg-blue-50 text-blue-800 border-blue-300 font-semibold'
-                : 'bg-white text-neutral-600 border-neutral-300 hover:bg-neutral-50'
-            }`}
-            title={
-              show3DObjects
-                ? 'Ocultar modelos 3D temáticos sobre las piezas'
-                : 'Mostrar modelos 3D temáticos sobre las piezas'
-            }
-          >
-            <Box className={`w-3.5 h-3.5 ${show3DObjects ? 'text-blue-600' : 'text-neutral-400'}`} />
-            <span className="hidden sm:inline">Modelos 3D: {show3DObjects ? 'ON' : 'OFF'}</span>
-          </button>
-        )}
-
-        {viewMode !== '2d' && (
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={triggerCameraReset}
-            icon={<RotateCcw className="w-3 h-3 text-neutral-600" />}
-            title="Restablecer posición de cámara"
-          >
-            <span className="hidden md:inline">Centrar</span>
-          </Button>
-        )}
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setCategoryFilter(isSelected ? 'all' : key)}
+              className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 border text-[10px] whitespace-nowrap cursor-pointer transition-all ${
+                isSelected
+                  ? 'bg-[#FCFBF7] border-[#1A1917] ring-1 ring-[#1A1917] font-semibold text-[#1A1917]'
+                  : 'bg-[#FCFBF7]/80 border-[#C8C1B2] text-[#3F3C35] hover:border-[#1A1917] hover:bg-[#FCFBF7]'
+              } ${isDimmed ? 'opacity-50' : 'opacity-100'}`}
+              title={`Filtrar serie: ${meta.label}`}
+            >
+              <span
+                style={{ backgroundColor: meta.color, borderColor: meta.borderColor }}
+                className="w-2.5 h-2.5 border shrink-0"
+              />
+              <span>{meta.shortLabel}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

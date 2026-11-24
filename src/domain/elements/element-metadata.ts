@@ -3,7 +3,8 @@ import type { ElementCategory, ElementBlock, ElementPhase } from '../chemistry-t
 export interface CategoryMeta {
   key: ElementCategory;
   label: string;
-  color: string; // Pastel background hex
+  shortLabel: string;
+  color: string; // Mineral lithographic background hex
   textColor: string;
   borderColor: string;
 }
@@ -12,79 +13,90 @@ export const CATEGORIES_META: Record<ElementCategory, CategoryMeta> = {
   'alkali-metal': {
     key: 'alkali-metal',
     label: 'Metales alcalinos',
-    color: '#FEE2E2', // soft red
-    textColor: '#991B1B',
-    borderColor: '#FECACA',
+    shortLabel: 'Alcalinos',
+    color: '#F2D5CE', // Terracota pálido
+    textColor: '#6E261A',
+    borderColor: '#CFA398',
   },
   'alkaline-earth-metal': {
     key: 'alkaline-earth-metal',
     label: 'Alcalinotérreos',
-    color: '#FFEDD5', // soft orange
-    textColor: '#9A3412',
-    borderColor: '#FED7AA',
+    shortLabel: 'Alcalinotérreos',
+    color: '#F5DFC4', // Ocre arena
+    textColor: '#6E4314',
+    borderColor: '#D4B48C',
   },
   'transition-metal': {
     key: 'transition-metal',
     label: 'Metales de transición',
-    color: '#E2E8F0', // soft slate
-    textColor: '#334155',
-    borderColor: '#CBD5E1',
+    shortLabel: 'Transición',
+    color: '#DCE3E8', // Pizarra acero
+    textColor: '#243746',
+    borderColor: '#B0BEC9',
   },
   'post-transition-metal': {
     key: 'post-transition-metal',
     label: 'Metales post-transición',
-    color: '#DCFCE7', // soft green
-    textColor: '#166534',
-    borderColor: '#BBF7D0',
+    shortLabel: 'Post-transición',
+    color: '#D5E6DC', // Verde celadón
+    textColor: '#1E4631',
+    borderColor: '#A3C4B1',
   },
   'metalloid': {
     key: 'metalloid',
     label: 'Metaloides',
-    color: '#FEF9C3', // soft yellow
-    textColor: '#854D0E',
-    borderColor: '#FEF08A',
+    shortLabel: 'Metaloides',
+    color: '#EFE6BE', // Ámbar latón
+    textColor: '#5C4D14',
+    borderColor: '#CCC089',
   },
   'reactive-nonmetal': {
     key: 'reactive-nonmetal',
     label: 'No metales reactivos',
-    color: '#E0F2FE', // soft sky
-    textColor: '#075985',
-    borderColor: '#BAE6FD',
+    shortLabel: 'No metales',
+    color: '#D4E6EC', // Aguamarina mineral
+    textColor: '#164859',
+    borderColor: '#9DC0CC',
   },
   'halogen': {
     key: 'halogen',
     label: 'Halógenos',
-    color: '#E0E7FF', // soft indigo
-    textColor: '#3730A3',
-    borderColor: '#C7D2FE',
+    shortLabel: 'Halógenos',
+    color: '#DCE0F0', // Cobalto mineral
+    textColor: '#283061',
+    borderColor: '#ADB5D6',
   },
   'noble-gas': {
     key: 'noble-gas',
     label: 'Gases nobles',
-    color: '#EDE9FE', // soft purple
-    textColor: '#581C87',
-    borderColor: '#DDD6FE',
+    shortLabel: 'Gases nobles',
+    color: '#E6DCF0', // Malva amatista
+    textColor: '#462A66',
+    borderColor: '#C0AED6',
   },
   'lanthanide': {
     key: 'lanthanide',
     label: 'Lantánidos',
-    color: '#FCE7F3', // soft pink
-    textColor: '#9D174D',
-    borderColor: '#FBCFE8',
+    shortLabel: 'Lantánidos',
+    color: '#F0D9E2', // Cuarzo rosa antiguo
+    textColor: '#66243F',
+    borderColor: '#CFA8B8',
   },
   'actinide': {
     key: 'actinide',
     label: 'Actínidos',
-    color: '#F3E8FF', // soft fuchsia
-    textColor: '#6B21A8',
-    borderColor: '#E9D5FF',
+    shortLabel: 'Actínidos',
+    color: '#E8D8EC', // Púrpura mineral
+    textColor: '#522661',
+    borderColor: '#C3A6CC',
   },
   'unknown': {
     key: 'unknown',
     label: 'Superpesados (predicción)',
-    color: '#F4F4F5', // zinc neutral
-    textColor: '#52525B',
-    borderColor: '#E4E4E7',
+    shortLabel: 'Superpesados',
+    color: '#E8E5DC', // Piedra caliza
+    textColor: '#4A473E',
+    borderColor: '#C7C2B4',
   },
 };
 
@@ -95,17 +107,65 @@ export const BLOCKS_META: Record<ElementBlock, { label: string; desc: string }> 
   f: { label: 'Bloque f', desc: 'Orbitales f (lantánidos y actínidos)' },
 };
 
-export const PHASES_META: Record<ElementPhase, { label: string }> = {
-  solid: { label: 'Sólido' },
-  liquid: { label: 'Líquido' },
-  gas: { label: 'Gas' },
-  unknown: { label: 'Sintético / Desconocido' },
+export const PHASES_META: Record<ElementPhase, { label: string; symbol: string }> = {
+  solid: { label: 'Sólido', symbol: 's' },
+  liquid: { label: 'Líquido', symbol: 'l' },
+  gas: { label: 'Gas', symbol: 'g' },
+  unknown: { label: 'Sintético / Predicción', symbol: 'sint.' },
+};
+
+/**
+ * Classical CAS / Mendeleev Roman numeral group designations paired with IUPAC 1-18
+ */
+export const GROUP_CAS_LABELS: Record<number, string> = {
+  1: 'IA',
+  2: 'IIA',
+  3: 'IIIB',
+  4: 'IVB',
+  5: 'VB',
+  6: 'VIB',
+  7: 'VIIB',
+  8: 'VIIIB',
+  9: 'VIIIB',
+  10: 'VIIIB',
+  11: 'IB',
+  12: 'IIB',
+  13: 'IIIA',
+  14: 'IVA',
+  15: 'VA',
+  16: 'VIA',
+  17: 'VIIA',
+  18: 'VIIIA',
+};
+
+/**
+ * Top occupied period row for each IUPAC column (1..18) for stepped group headers
+ */
+export const GROUP_TOP_PERIOD: Record<number, number> = {
+  1: 1,
+  2: 2,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 4,
+  7: 4,
+  8: 4,
+  9: 4,
+  10: 4,
+  11: 4,
+  12: 4,
+  13: 2,
+  14: 2,
+  15: 2,
+  16: 2,
+  17: 2,
+  18: 1,
 };
 
 /**
  * Calculates (x, y) 2D/3D table coordinates according to IUPAC layout
  * - Groups 1..18, Periods 1..7
- * - Lanthanides (57-71) in row 8.5, columns 3..17
+ * - Lanthanides (57-71) in row 8.4, columns 3..17
  * - Actinides (89-103) in row 9.5, columns 3..17
  */
 export function getElementCoordinates(elementNumber: number, period: number, group: number): { x: number; y: number } {

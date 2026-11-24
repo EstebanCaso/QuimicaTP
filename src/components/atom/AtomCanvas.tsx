@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { Play, Pause, CircleDot, Cloud, RotateCcw } from 'lucide-react';
+import { Play, Pause, RotateCcw } from 'lucide-react';
 import type { ChemicalElement } from '../../domain/chemistry-types';
 import { Nucleus } from './Nucleus';
 import { ElectronShells } from './ElectronShells';
 import { OrbitalCloud } from './OrbitalCloud';
-import { Button } from '../ui/Button';
 
 interface AtomCanvasProps {
   element: ChemicalElement;
   height?: string;
 }
 
-export const AtomCanvas: React.FC<AtomCanvasProps> = ({ element, height = 'h-72' }) => {
+export const AtomCanvas: React.FC<AtomCanvasProps> = ({ element, height = 'h-64' }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [showRings, setShowRings] = useState<boolean>(true);
   const [modelType, setModelType] = useState<'bohr' | 'cloud'>('bohr');
@@ -26,7 +25,7 @@ export const AtomCanvas: React.FC<AtomCanvasProps> = ({ element, height = 'h-72'
   const cameraDistance = Math.max(7, 3.5 + element.electronShells.length * 1.1);
 
   return (
-    <div className={`relative w-full ${height} bg-neutral-50 rounded-lg border border-neutral-200 overflow-hidden select-none`}>
+    <div className={`relative w-full ${height} bg-[#F5F2EA] border border-[#1A1917] overflow-hidden select-none`}>
       {/* 3D Canvas */}
       <Canvas
         key={resetKey}
@@ -34,8 +33,9 @@ export const AtomCanvas: React.FC<AtomCanvasProps> = ({ element, height = 'h-72'
         dpr={[1, 2]}
         gl={{ antialias: true }}
       >
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[10, 15, 10]} intensity={1.5} />
+        <color attach="background" args={['#F5F2EA']} />
+        <ambientLight intensity={1.3} />
+        <directionalLight position={[10, 15, 10]} intensity={1.4} />
         <directionalLight position={[-10, -10, -10]} intensity={0.5} />
 
         <Nucleus protons={protons} neutrons={neutrons} />
@@ -58,60 +58,71 @@ export const AtomCanvas: React.FC<AtomCanvasProps> = ({ element, height = 'h-72'
         />
       </Canvas>
 
-      {/* Floating Atom Controls Overlay */}
-      <div className="absolute top-2 right-2 flex items-center gap-1.5 bg-white/95 backdrop-blur-xs p-1 rounded-md border border-neutral-200 shadow-xs z-10">
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => setIsPlaying(!isPlaying)}
-          title={isPlaying ? 'Pausar animación' : 'Reanudar animación'}
-          icon={isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-        />
-
-        {modelType === 'bohr' && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => setShowRings(!showRings)}
-            title={showRings ? 'Ocultar anillos orbitales' : 'Mostrar anillos orbitales'}
-            icon={<CircleDot className={`w-3.5 h-3.5 ${showRings ? 'text-blue-600' : 'text-neutral-400'}`} />}
-          />
-        )}
-
-        <Button
-          size="sm"
-          variant={modelType === 'cloud' ? 'primary' : 'ghost'}
-          onClick={() => setModelType(modelType === 'bohr' ? 'cloud' : 'bohr')}
-          title={modelType === 'bohr' ? 'Cambiar a nube cuántica de probabilidad' : 'Cambiar a modelo de capas de Bohr'}
-          icon={<Cloud className="w-3.5 h-3.5" />}
-        >
-          <span className="text-[11px] hidden sm:inline">
-            {modelType === 'bohr' ? 'Capas' : 'Nube'}
-          </span>
-        </Button>
-
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => setResetKey((k) => k + 1)}
-          title="Centrar vista 3D"
-          icon={<RotateCcw className="w-3.5 h-3.5" />}
-        />
+      {/* Top-left Figure Caption */}
+      <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-[#FCFBF7] border border-[#C8C1B2] font-mono text-[9px] uppercase tracking-wider text-[#57534A] pointer-events-none">
+        {modelType === 'bohr' ? 'Modelo de Bohr (Capas)' : 'Densidad Orbital |ψ|²'}
       </div>
 
-      {/* Mini Legend Footer */}
-      <div className="absolute bottom-2 left-2 flex items-center gap-3 px-2 py-1 bg-white/95 rounded border border-neutral-200 text-[10px] text-neutral-600">
-        <span className="flex items-center gap-1 font-medium">
-          <span className="w-2 h-2 rounded-full bg-blue-600 inline-block" />
-          Protones: {protons}
+      {/* Top-right Technical Controls */}
+      <div className="absolute top-2 right-2 inline-flex bg-[#FCFBF7] border border-[#1A1917] z-10">
+        <button
+          type="button"
+          onClick={() => setIsPlaying(!isPlaying)}
+          className="px-2 py-1 text-[#1A1917] hover:bg-[#EDE9DF] border-r border-[#D5CFC2] cursor-pointer"
+          title={isPlaying ? 'Pausar animación orbital' : 'Reanudar animación orbital'}
+        >
+          {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+        </button>
+
+        {modelType === 'bohr' && (
+          <button
+            type="button"
+            onClick={() => setShowRings(!showRings)}
+            className={`px-2 py-1 font-mono text-[10px] uppercase border-r border-[#D5CFC2] cursor-pointer ${
+              showRings ? 'bg-[#E6ECF4] text-[#1B3B6F] font-semibold' : 'text-[#57534A] hover:bg-[#EDE9DF]'
+            }`}
+            title={showRings ? 'Ocultar guías orbitales' : 'Mostrar guías orbitales'}
+          >
+            Órbitas
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setModelType(modelType === 'bohr' ? 'cloud' : 'bohr')}
+          className={`px-2 py-1 font-mono text-[10px] uppercase border-r border-[#D5CFC2] cursor-pointer ${
+            modelType === 'cloud'
+              ? 'bg-[#1B3B6F] text-[#FCFBF7] font-semibold'
+              : 'text-[#1A1917] hover:bg-[#EDE9DF]'
+          }`}
+          title="Conmutar entre modelo de capas de Bohr y nube de probabilidad cuántica"
+        >
+          {modelType === 'bohr' ? 'Nube ψ²' : 'Bohr'}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setResetKey((k) => k + 1)}
+          className="px-2 py-1 text-[#1A1917] hover:bg-[#EDE9DF] cursor-pointer"
+          title="Restablecer vista del átomo"
+        >
+          <RotateCcw className="w-3 h-3" />
+        </button>
+      </div>
+
+      {/* Subatomic Particle Tally Footer */}
+      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between px-2.5 py-1 bg-[#FCFBF7] border border-[#C8C1B2] font-mono text-[10px] text-[#57534A]">
+        <span className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-[#2563EB] inline-block" />
+          p⁺ = <strong className="text-[#1A1917]">{protons}</strong>
         </span>
-        <span className="flex items-center gap-1 font-medium">
-          <span className="w-2 h-2 rounded-full bg-slate-400 inline-block" />
-          Neutrones: {neutrons}
+        <span className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-[#94A3B8] inline-block" />
+          n⁰ ≈ <strong className="text-[#1A1917]">{neutrons}</strong>
         </span>
-        <span className="flex items-center gap-1 font-medium">
-          <span className="w-2 h-2 rounded-full bg-sky-500 inline-block" />
-          Electrones: {totalElectrons}
+        <span className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-[#0284C7] inline-block" />
+          e⁻ = <strong className="text-[#1A1917]">{totalElectrons}</strong>
         </span>
       </div>
     </div>

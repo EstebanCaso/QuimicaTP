@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Copy, Check, FlaskConical, Search, Info, ShieldAlert, Sparkles } from 'lucide-react';
+import { X, Copy, Check, Search } from 'lucide-react';
 import { usePeriodicStore } from '../../store/usePeriodicStore';
 import { generateCompounds } from '../../domain/compounds/generator';
 import type { CompoundType } from '../../domain/chemistry-types';
@@ -55,7 +55,6 @@ export const CompoundsPanel: React.FC = () => {
     });
   }, [result.compounds, selectedType, searchFilter]);
 
-  // Unique types present in current results
   const availableTypes = useMemo(() => {
     const types = new Set<CompoundType>();
     for (const c of result.compounds) {
@@ -65,28 +64,23 @@ export const CompoundsPanel: React.FC = () => {
   }, [result.compounds]);
 
   return (
-    <div className="w-full md:w-[460px] lg:w-[500px] h-full bg-white border-l border-neutral-200 flex flex-col shadow-lg z-20 overflow-hidden">
-      {/* Top Header */}
-      <div className="p-3 border-b border-neutral-200 flex items-center justify-between bg-neutral-50/70">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded border border-blue-200 bg-blue-50 text-blue-700 flex items-center justify-center">
-            <FlaskConical className="w-4 h-4" />
-          </div>
-          <div>
-            <h2 className="text-sm font-bold text-neutral-900 leading-tight">
-              Compuestos Posibles
-            </h2>
-            <div className="text-[11px] text-neutral-500">
-              Elementos: <span className="font-semibold text-neutral-800">{selectedSymbols.join(' + ')}</span> · {result.compounds.length} combinaciones
-            </div>
-          </div>
+    <div className="w-full md:w-[460px] lg:w-[500px] h-full bg-[#FCFBF7] border-l border-[#1A1917] flex flex-col z-20 overflow-hidden">
+      {/* Archival Panel Header */}
+      <div className="px-4 py-2.5 border-b border-[#1A1917] bg-[#EDE9DF] flex items-center justify-between select-none">
+        <div>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[#57534A] block leading-none">
+            Sistema Reactivo · {selectedSymbols.join(' + ')}
+          </span>
+          <h2 className="font-serif font-semibold text-sm text-[#1A1917] mt-0.5">
+            Formulación y Nomenclatura ({result.compounds.length})
+          </h2>
         </div>
 
         <button
           type="button"
           onClick={() => setActivePanel('none')}
-          className="p-1 rounded text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/60 cursor-pointer transition-colors"
-          title="Cerrar panel"
+          className="p-1 border border-transparent hover:border-[#1A1917] text-[#57534A] hover:text-[#1A1917] cursor-pointer transition-colors"
+          title="Cerrar registro de compuestos"
         >
           <X className="w-4 h-4" />
         </button>
@@ -94,15 +88,15 @@ export const CompoundsPanel: React.FC = () => {
 
       {/* Filter and Search Bar inside panel */}
       {result.compounds.length > 0 && (
-        <div className="p-2.5 border-b border-neutral-200 bg-white space-y-2">
+        <div className="p-3 border-b border-[#C8C1B2] bg-[#F5F2EA] space-y-2">
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-3.5 h-3.5 text-[#857F72] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
-              placeholder="Buscar por fórmula o nombre..."
-              className="w-full pl-8 pr-2.5 py-1 text-xs rounded-md border border-neutral-300 bg-neutral-50 text-neutral-800 placeholder-neutral-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
+              placeholder="Filtrar por fórmula o nomenclatura..."
+              className="w-full pl-8 pr-2.5 py-1 text-xs font-mono bg-[#FCFBF7] border border-[#B8B0A0] text-[#1A1917] placeholder-[#857F72] rounded-[2px] focus:outline-none focus:border-[#1A1917]"
             />
           </div>
 
@@ -111,13 +105,13 @@ export const CompoundsPanel: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedType('all')}
-                className={`px-2 py-0.5 text-[11px] font-medium rounded border cursor-pointer transition-colors ${
+                className={`px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider border cursor-pointer transition-colors ${
                   selectedType === 'all'
-                    ? 'bg-blue-600 text-white border-blue-700'
-                    : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50'
+                    ? 'bg-[#1A1917] text-[#FCFBF7] border-[#1A1917] font-semibold'
+                    : 'bg-[#FCFBF7] text-[#57534A] border-[#C8C1B2] hover:border-[#1A1917]'
                 }`}
               >
-                Todos ({result.compounds.length})
+                Todos [{result.compounds.length}]
               </button>
               {availableTypes.map((t) => {
                 const count = result.compounds.filter((c) => c.type === t).length;
@@ -127,13 +121,13 @@ export const CompoundsPanel: React.FC = () => {
                     key={t}
                     type="button"
                     onClick={() => setSelectedType(t)}
-                    className={`px-2 py-0.5 text-[11px] font-medium rounded border cursor-pointer transition-colors ${
+                    className={`px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider border cursor-pointer transition-colors ${
                       selectedType === t
-                        ? 'bg-blue-600 text-white border-blue-700'
-                        : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50'
+                        ? 'bg-[#1A1917] text-[#FCFBF7] border-[#1A1917] font-semibold'
+                        : 'bg-[#FCFBF7] text-[#57534A] border-[#C8C1B2] hover:border-[#1A1917]'
                     }`}
                   >
-                    {sample?.typeLabel || t} ({count})
+                    {sample?.typeLabel || t} [{count}]
                   </button>
                 );
               })}
@@ -142,64 +136,62 @@ export const CompoundsPanel: React.FC = () => {
         </div>
       )}
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        {/* Noble Gases Alert */}
+      {/* Scrollable Formulation Ledger */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3.5">
+        {/* Noble Gases Inertness Note */}
         {result.isInert && (
-          <div className="p-4 rounded-lg border border-purple-200 bg-purple-50 text-purple-900 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-xs">
-              <Sparkles className="w-4 h-4 text-purple-600" />
-              <span>Inercia Química de Gases Nobles</span>
+          <div className="p-4 border border-[#C0AED6] border-l-4 border-l-[#462A66] bg-[#F3EEF8] space-y-1.5">
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-[#462A66]">
+              Nota Químico-Cuántica · Inercia de Gases Nobles
             </div>
-            <p className="text-xs leading-relaxed text-neutral-700">{result.message}</p>
+            <p className="text-xs leading-relaxed text-[#2B2925]">{result.message}</p>
           </div>
         )}
 
-        {/* Pure Metal Alloy Alert */}
+        {/* Pure Metal Alloy Note */}
         {result.isAlloyOnly && (
-          <div className="p-4 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-xs">
-              <ShieldAlert className="w-4 h-4 text-slate-700" />
-              <span>Enlace Metálico y Aleaciones</span>
+          <div className="p-4 border border-[#B0BEC9] border-l-4 border-l-[#243746] bg-[#EDF1F4] space-y-1.5">
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-[#243746]">
+              Sistema Metálico · Aleación o Fase Intermetálica
             </div>
-            <p className="text-xs leading-relaxed text-neutral-700">{result.message}</p>
+            <p className="text-xs leading-relaxed text-[#2B2925]">{result.message}</p>
           </div>
         )}
 
-        {/* No compounds found */}
+        {/* Empty filter state */}
         {!result.isInert && !result.isAlloyOnly && filteredCompounds.length === 0 && (
-          <div className="text-center py-10 text-neutral-500 text-xs space-y-1">
-            <Info className="w-6 h-6 mx-auto text-neutral-400 mb-2" />
-            <p className="font-medium text-neutral-700">No se encontraron compuestos coincidentes</p>
-            <p className="text-neutral-500">Prueba ajustando los filtros de búsqueda.</p>
+          <div className="text-center py-10 border border-dashed border-[#C8C1B2] text-xs space-y-1">
+            <p className="font-serif font-semibold text-[#1A1917]">
+              Sin coincidencias para el criterio actual
+            </p>
+            <p className="font-mono text-[11px] text-[#857F72]">
+              Modifica el término de búsqueda o selecciona otra familia química.
+            </p>
           </div>
         )}
 
-        {/* List of Compound Cards */}
+        {/* Compound Formulation Sheets */}
         {filteredCompounds.map((comp) => {
           const isCopied = copiedId === comp.id;
 
           return (
-            <div
+            <article
               key={comp.id}
-              className="p-3 rounded-lg border border-neutral-200 bg-white hover:border-neutral-300 transition-colors shadow-2xs space-y-2.5"
+              className="border border-[#B8B0A0] bg-[#FCFBF7] hover:border-[#1A1917] transition-colors"
             >
-              {/* Formula & Copy Button */}
-              <div className="flex items-start justify-between gap-2">
+              {/* Formula Header Band */}
+              <div className="px-3 py-2 bg-[#EDE9DF] border-b border-[#D5CFC2] flex items-center justify-between gap-2">
                 <div>
-                  <div className="text-xl font-bold font-mono text-neutral-900 tracking-tight">
+                  <div className="text-xl font-bold font-mono text-[#1A1917] tracking-tight leading-none">
                     {comp.formulaFormatted}
                   </div>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-neutral-100 text-neutral-700 border border-neutral-200">
-                      {comp.typeLabel}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[9.5px] uppercase tracking-wider">
+                    <span className="text-[#3A3731] font-semibold">{comp.typeLabel}</span>
+                    <span className="text-[#ACA493]">·</span>
                     <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-medium border ${
-                        comp.bondType === 'ionico'
-                          ? 'bg-blue-50 text-blue-700 border-blue-200'
-                          : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                      }`}
+                      className={
+                        comp.bondType === 'ionico' ? 'text-[#1B3B6F]' : 'text-[#1E4631]'
+                      }
                     >
                       {comp.bondType === 'ionico' ? 'Enlace Iónico' : 'Enlace Covalente'}
                     </span>
@@ -210,58 +202,64 @@ export const CompoundsPanel: React.FC = () => {
                   size="sm"
                   variant={isCopied ? 'primary' : 'secondary'}
                   onClick={() => handleCopy(comp.formulaFormatted, comp.id)}
-                  title="Copiar fórmula química"
-                  icon={isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  title="Copiar fórmula al portapapeles"
+                  icon={
+                    isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />
+                  }
                 >
-                  <span className="text-[11px]">{isCopied ? 'Copiado' : 'Copiar'}</span>
+                  <span className="font-mono uppercase text-[10px]">
+                    {isCopied ? 'Copiada' : 'Copiar'}
+                  </span>
                 </Button>
               </div>
 
-              {/* Triple Nomenclature Block */}
-              <div className="bg-neutral-50 rounded-md p-2.5 border border-neutral-200 text-xs space-y-1.5">
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-neutral-500 block">
-                    Nomenclatura Sistemática (IUPAC)
+              {/* Tabular Triple Nomenclature Ledger */}
+              <div className="divide-y divide-[#E5E0D5] text-xs px-3">
+                <div className="py-1.5 grid grid-cols-[105px_1fr] gap-2 items-baseline">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#857F72]">
+                    Sistemática
                   </span>
-                  <span className="font-semibold text-neutral-900">{comp.nomenclature.systematic}</span>
+                  <span className="font-medium text-[#1A1917]">{comp.nomenclature.systematic}</span>
                 </div>
 
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-neutral-500 block">
-                    Nomenclatura Stock
+                <div className="py-1.5 grid grid-cols-[105px_1fr] gap-2 items-baseline">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#857F72]">
+                    Stock
                   </span>
-                  <span className="text-neutral-800">{comp.nomenclature.stock}</span>
+                  <span className="text-[#1A1917]">{comp.nomenclature.stock}</span>
                 </div>
 
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-neutral-500 block">
-                    Nomenclatura Tradicional
+                <div className="py-1.5 grid grid-cols-[105px_1fr] gap-2 items-baseline">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#857F72]">
+                    Tradicional
                   </span>
-                  <span className="text-neutral-800 italic">{comp.nomenclature.traditional}</span>
+                  <span className="italic text-[#3A3731]">{comp.nomenclature.traditional}</span>
                 </div>
 
                 {comp.nomenclature.common && (
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-neutral-500 block">
-                      Nombre común / habitual
+                  <div className="py-1.5 grid grid-cols-[105px_1fr] gap-2 items-baseline">
+                    <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#857F72]">
+                      Nombre usual
                     </span>
-                    <span className="text-blue-800 font-medium">{comp.nomenclature.common}</span>
+                    <span className="font-semibold text-[#1B3B6F]">{comp.nomenclature.common}</span>
                   </div>
                 )}
               </div>
 
-              {/* Description */}
-              <p className="text-[11px] text-neutral-600 leading-relaxed">{comp.description}</p>
-            </div>
+              {/* Brief Chemical Note */}
+              <div className="px-3 py-2 bg-[#F5F2EA]/70 border-t border-[#E5E0D5] text-[11px] text-[#57534A] leading-relaxed">
+                {comp.description}
+              </div>
+            </article>
           );
         })}
       </div>
 
-      {/* Discreet Disclaimer Footer */}
-      <div className="p-2.5 bg-neutral-100/70 border-t border-neutral-200 text-[10px] text-neutral-500 leading-snug">
-        <strong>Aviso pedagógico:</strong> Las fórmulas mostradas son combinaciones teóricas derivadas
-        de los estados de oxidación conocidos y reglas estequiométricas de la IUPAC. No todas las
-        especies son estables o aislables en condiciones ambientales ordinarias.
+      {/* Editorial Disclaimer Footer */}
+      <div className="px-4 py-2.5 bg-[#EDE9DF] border-t border-[#1A1917] font-mono text-[9.5px] text-[#57534A] leading-snug">
+        <strong className="text-[#1A1917] uppercase">Nota estequiométrica:</strong> Combinaciones
+        calculadas por balance de estados de oxidación formales según reglas IUPAC. La estabilidad
+        termodinámica depende de las condiciones de presión y temperatura.
       </div>
     </div>
   );

@@ -12,6 +12,11 @@ interface ElementTile3DProps {
   isFilteredOut: boolean;
 }
 
+// Shared geometries for all 118 tiles to minimize GPU memory & draw overhead
+const SHARED_TILE_GEO = new THREE.BoxGeometry(1.0, 1.0, 0.12);
+const SHARED_BORDER_EDGES = new THREE.EdgesGeometry(new THREE.BoxGeometry(1.005, 1.005, 0.125));
+const SHARED_SELECTED_EDGES = new THREE.EdgesGeometry(new THREE.BoxGeometry(1.03, 1.03, 0.15));
+
 export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFilteredOut }) => {
   const meshRef = useRef<THREE.Group>(null);
 
@@ -29,10 +34,9 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
   const shouldRender3DModel = viewMode === '3d' && show3DObjects && !isFilteredOut;
 
   // Spatial coordinates
-  // Center: group 9.5 -> x = 0, period 5 -> y = 0
   const coords = useMemo(() => {
     const raw = getElementCoordinates(element.number, element.period, element.group);
-    const spacing = 1.08;
+    const spacing = 1.06;
     const posX = (raw.x - 9.5) * spacing;
     const posY = -(raw.y - 5.0) * spacing;
     return { x: posX, y: posY };
@@ -40,13 +44,15 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
 
   const catMeta = CATEGORIES_META[element.category] || CATEGORIES_META.unknown;
 
-  // Color & Materials
+  // Colors
   const baseColor = useMemo(() => new THREE.Color(catMeta.color), [catMeta.color]);
-  const highlightColor = useMemo(() => new THREE.Color('#3B82F6'), []);
-  const dimmedColor = useMemo(() => new THREE.Color('#E5E7EB'), []);
+  const borderRuleColor = useMemo(() => new THREE.Color(catMeta.borderColor), [catMeta.borderColor]);
+  const prussianColor = useMemo(() => new THREE.Color('#1B3B6F'), []);
+  const inkColor = useMemo(() => new THREE.Color('#1A1917'), []);
+  const dimmedColor = useMemo(() => new THREE.Color('#E8E4DA'), []);
 
-  // Target Z position for smooth elevation
-  const targetZ = isSelected ? 0.38 : isHovered ? 0.28 : 0;
+  // Smooth elevation on Z
+  const targetZ = isSelected ? 0.36 : isHovered ? 0.24 : 0;
   const currentZ = useRef(0);
 
   useFrame((_, delta) => {
@@ -56,7 +62,7 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
     meshRef.current.position.z = currentZ.current;
   });
 
-  const tileOpacity = isFilteredOut ? 0.18 : 1.0;
+  const tileOpacity = isFilteredOut ? 0.22 : 1.0;
 
   return (
     <group
@@ -79,46 +85,53 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
         document.body.style.cursor = 'default';
       }}
     >
-      {/* Base Tile Box */}
-      <mesh receiveShadow castShadow>
-        <boxGeometry args={[1.0, 1.0, 0.12]} />
+      {/* Lithographic Tile Block */}
+      <mesh geometry={SHARED_TILE_GEO} receiveShadow castShadow>
         <meshStandardMaterial
           color={isFilteredOut ? dimmedColor : baseColor}
-          roughness={0.4}
-          metalness={0.05}
+          roughness={0.65}
+          metalness={0.02}
           transparent={isFilteredOut}
           opacity={tileOpacity}
         />
       </mesh>
 
-      {/* Selected Border Outline */}
+      {/* Architectural Hairline Cell Border (gives traditional printed cell definition) */}
+      <lineSegments geometry={SHARED_BORDER_EDGES}>
+        <lineBasicMaterial
+          color={isSelected ? prussianColor : isHovered ? inkColor : borderRuleColor}
+          transparent={isFilteredOut}
+          opacity={isFilteredOut ? 0.2 : 0.85}
+        />
+      </lineSegments>
+
+      {/* Outer Frame when Selected */}
       {isSelected && (
-        <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(1.02, 1.02, 0.14)]} />
-          <lineBasicMaterial color={highlightColor} linewidth={2} />
+        <lineSegments geometry={SHARED_SELECTED_EDGES}>
+          <lineBasicMaterial color={inkColor} />
         </lineSegments>
       )}
 
       {/* Atomic Number (top-left) */}
       <Text
-        position={[-0.38, 0.36, 0.07]}
+        position={[-0.41, 0.4, 0.068]}
         fontSize={0.11}
-        color={isFilteredOut ? '#9CA3AF' : '#27272A'}
+        color={isFilteredOut ? '#9E988B' : '#1A1917'}
         anchorX="left"
         anchorY="top"
-        fontWeight={600}
+        fontWeight={700}
       >
         {element.number.toString()}
       </Text>
 
       {/* Atomic Mass (top-right) */}
       <Text
-        position={[0.38, 0.36, 0.07]}
-        fontSize={0.08}
-        color={isFilteredOut ? '#9CA3AF' : '#71717A'}
+        position={[0.41, 0.4, 0.068]}
+        fontSize={0.082}
+        color={isFilteredOut ? '#9E988B' : '#57534A'}
         anchorX="right"
         anchorY="top"
-        fontWeight={400}
+        fontWeight={500}
       >
         {element.atomicMass < 100
           ? element.atomicMass.toFixed(2)
@@ -136,13 +149,9 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
 
       {/* Chemical Symbol */}
       <Text
-        position={
-          shouldRender3DModel
-            ? [0, -0.22, 0.07]
-            : [0, 0.04, 0.07]
-        }
-        fontSize={shouldRender3DModel ? 0.22 : 0.32}
-        color={isFilteredOut ? '#9CA3AF' : isSelected ? '#1D4ED8' : '#18181B'}
+        position={shouldRender3DModel ? [0, -0.21, 0.068] : [0, 0.03, 0.068]}
+        fontSize={shouldRender3DModel ? 0.22 : 0.33}
+        color={isFilteredOut ? '#9E988B' : isSelected ? '#1B3B6F' : '#1A1917'}
         anchorX="center"
         anchorY="middle"
         fontWeight={700}
@@ -152,9 +161,9 @@ export const ElementTile3D: React.FC<ElementTile3DProps> = ({ element, isFiltere
 
       {/* Element Name in Spanish (bottom) */}
       <Text
-        position={[0, -0.38, 0.07]}
-        fontSize={shouldRender3DModel ? 0.075 : 0.09}
-        color={isFilteredOut ? '#9CA3AF' : '#3F3F46'}
+        position={[0, -0.4, 0.068]}
+        fontSize={shouldRender3DModel ? 0.075 : 0.088}
+        color={isFilteredOut ? '#9E988B' : '#3A3731'}
         anchorX="center"
         anchorY="bottom"
         maxWidth={0.9}

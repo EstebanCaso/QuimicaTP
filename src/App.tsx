@@ -44,11 +44,11 @@ export const App: React.FC = () => {
   }, [setActivePanel]);
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden bg-[#FAFAFA] text-[#18181B]">
-      {/* App Header */}
+    <div className="flex flex-col w-screen h-screen overflow-hidden bg-[#F5F2EA] text-[#1A1917]">
+      {/* Classical Wall-Chart Title Block & View Switcher */}
       <Header />
 
-      {/* Filter and View Controls Bar */}
+      {/* Search, Block/Phase Filters & Lithographic Family Swatches */}
       <FilterBar />
 
       {/* Main Workspace Area */}
@@ -61,12 +61,12 @@ export const App: React.FC = () => {
             <PeriodicScene />
           )}
 
-          {/* Interactive Overlays */}
+          {/* Reference Colophon & Live Specimen Card */}
           <PeriodicLegend />
           <HoverHUD />
         </main>
 
-        {/* Desktop Side Panel */}
+        {/* Desktop Archival Side Panel */}
         {!isMobile && activePanel !== 'none' && (
           <aside className="h-full shrink-0 z-20">
             {activePanel === 'info' && <ElementInfoPanel />}
@@ -76,17 +76,15 @@ export const App: React.FC = () => {
 
         {/* Mobile Bottom Sheet Overlay */}
         {isMobile && activePanel !== 'none' && (
-          <div className="fixed inset-0 z-40 bg-black/40 backdrop-blur-2xs flex flex-col justify-end">
-            <div
-              className="w-full max-h-[85vh] bg-white rounded-t-xl overflow-hidden shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-200"
-            >
+          <div className="fixed inset-0 z-40 bg-[#1A1917]/50 flex flex-col justify-end">
+            <div className="w-full max-h-[86vh] bg-[#FCFBF7] border-t-2 border-[#1A1917] overflow-hidden flex flex-col">
               {activePanel === 'info' && <ElementInfoPanel />}
               {activePanel === 'compounds' && <CompoundsPanel />}
             </div>
           </div>
         )}
 
-        {/* Floating Selection Bar */}
+        {/* Bottom Selection Ledger Bar */}
         <SelectionBar />
       </div>
     </div>
